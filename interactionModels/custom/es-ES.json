@@ -1,0 +1,397 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "ejercicios mentales",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "WelcomeMoneyIntent",
+          "slots": [],
+          "samples": [
+            "dinero"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AnswerMoneyIntent",
+          "slots": [
+            {
+              "name": "moneyNumber",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "{moneyNumber}"
+          ]
+        },
+        {
+          "name": "WelcomeWordsIntent",
+          "slots": [],
+          "samples": [
+            "palabras"
+          ]
+        },
+        {
+          "name": "AnswerWordsIntent",
+          "slots": [
+            {
+              "name": "wordsWord",
+              "type": "respuestaPalabras"
+            }
+          ],
+          "samples": [
+            "la palabra es {wordsWord}"
+          ]
+        },
+        {
+          "name": "WelcomeLettersIntent",
+          "slots": [],
+          "samples": [
+            "letras"
+          ]
+        },
+        {
+          "name": "AnswerLettersIntent",
+          "slots": [
+            {
+              "name": "lettersNumber",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "hay {lettersNumber}"
+          ]
+        },
+        {
+          "name": "WelcomeObjectsIntent",
+          "slots": [],
+          "samples": [
+            "objetos"
+          ]
+        },
+        {
+          "name": "AnswerObjectsIntent",
+          "slots": [
+            {
+              "name": "objectsObject",
+              "type": "respuestaObjetos"
+            }
+          ],
+          "samples": [
+            "la respuesta es {objectsObject}"
+          ]
+        },
+        {
+          "name": "WelcomeColorsIntent",
+          "slots": [],
+          "samples": [
+            "colores"
+          ]
+        },
+        {
+          "name": "AnswerColorsIntent",
+          "slots": [
+            {
+              "name": "colorsColor",
+              "type": "respuestaColores"
+            }
+          ],
+          "samples": [
+            "es de color {colorsColor}"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "name": {
+                "value": "mochila"
+              }
+            },
+            {
+              "name": {
+                "value": "carretera"
+              }
+            },
+            {
+              "name": {
+                "value": "armario"
+              }
+            },
+            {
+              "name": {
+                "value": "telefono"
+              }
+            },
+            {
+              "name": {
+                "value": "ventana"
+              }
+            },
+            {
+              "name": {
+                "value": "platano"
+              }
+            },
+            {
+              "name": {
+                "value": "manzana"
+              }
+            },
+            {
+              "name": {
+                "value": "problema"
+              }
+            },
+            {
+              "name": {
+                "value": "conejo"
+              }
+            },
+            {
+              "name": {
+                "value": "tortuga"
+              }
+            },
+            {
+              "name": {
+                "value": "iglesia"
+              }
+            },
+            {
+              "name": {
+                "value": "cable"
+              }
+            },
+            {
+              "name": {
+                "value": "gato"
+              }
+            },
+            {
+              "name": {
+                "value": "divertido"
+              }
+            },
+            {
+              "name": {
+                "value": "soldado"
+              }
+            },
+            {
+              "name": {
+                "value": "vaso"
+              }
+            },
+            {
+              "name": {
+                "value": "solitario"
+              }
+            },
+            {
+              "name": {
+                "value": "balanza"
+              }
+            },
+            {
+              "name": {
+                "value": "ministro"
+              }
+            },
+            {
+              "name": {
+                "value": "garaje"
+              }
+            },
+            {
+              "name": {
+                "value": "noche"
+              }
+            },
+            {
+              "name": {
+                "value": "tesoro"
+              }
+            },
+            {
+              "name": {
+                "value": "pobre"
+              }
+            },
+            {
+              "name": {
+                "value": "medico"
+              }
+            },
+            {
+              "name": {
+                "value": "domingo"
+              }
+            },
+            {
+              "name": {
+                "value": "pañuelo"
+              }
+            },
+            {
+              "name": {
+                "value": "gallina"
+              }
+            },
+            {
+              "name": {
+                "value": "baile"
+              }
+            },
+            {
+              "name": {
+                "value": "madre"
+              }
+            },
+            {
+              "name": {
+                "value": "colegio"
+              }
+            }
+          ],
+          "name": "respuestaPalabras"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "reloj"
+              }
+            },
+            {
+              "name": {
+                "value": "peine"
+              }
+            },
+            {
+              "name": {
+                "value": "pañuelos"
+              }
+            },
+            {
+              "name": {
+                "value": "television"
+              }
+            },
+            {
+              "name": {
+                "value": "zapatillas"
+              }
+            },
+            {
+              "name": {
+                "value": "tenedor"
+              }
+            },
+            {
+              "name": {
+                "value": "cuchillo"
+              }
+            },
+            {
+              "name": {
+                "value": "cuchara"
+              }
+            },
+            {
+              "name": {
+                "value": "lapiz"
+              }
+            },
+            {
+              "name": {
+                "value": "calcetines"
+              }
+            },
+            {
+              "name": {
+                "value": "silla"
+              }
+            },
+            {
+              "name": {
+                "value": "boligrafo"
+              }
+            },
+            {
+              "name": {
+                "value": "telefono"
+              }
+            }
+          ],
+          "name": "respuestaObjetos"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "marron"
+              }
+            },
+            {
+              "name": {
+                "value": "azul"
+              }
+            },
+            {
+              "name": {
+                "value": "blanco"
+              }
+            },
+            {
+              "name": {
+                "value": "negro"
+              }
+            },
+            {
+              "name": {
+                "value": "amarillo"
+              }
+            },
+            {
+              "name": {
+                "value": "verde"
+              }
+            },
+            {
+              "name": {
+                "value": "naranja"
+              }
+            },
+            {
+              "name": {
+                "value": "rojo"
+              }
+            }
+          ],
+          "name": "respuestaColores"
+        }
+      ]
+    }
+  },
+  "version": "9"
+}
