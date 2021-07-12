@@ -4,8 +4,7 @@ const interceptors = require('./interceptors');
 
 let numArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 shuffle(numArray);
-let dontknowArray = [1, 2, 3, 4];
-let randomNum, audio;
+let randomNum, status, message, audio;
 let level = 1;
 
 //Explicación: Este manejador se ejecuta cuando se abre la aplicación. Se da un mensaje bienvenida al usuario y se le presentan los ejercicios existentes.
@@ -171,6 +170,7 @@ const AnswerMoneyIntentHandler = {
     	    const speakOutput = (result.audio + result.message + 'Hemos terminado con esta actividad. Has acertado ' + sessionAttributes.correctMo + ' y has fallado ' + sessionAttributes.wrongMo + '. ' + speak);
     	    const speakOutput1 = 'Puedes realizar otro ejercicio o salir.';
     	    const speechImage = 'Tu puntuación es: ' + sessionAttributes.correctMo + '/5. ';
+    	    sessionAttributes.moneyActive = false;
     	    
     	    if(supportsAPL(handlerInput)){
 	        return handlerInput.responseBuilder
@@ -358,6 +358,7 @@ const AnswerWordsIntentHandler = {
     	    const speakOutput = (result.audio + result.message + 'Hemos terminado con esta actividad. Has acertado ' + sessionAttributes.correctWo + ' y has fallado ' + sessionAttributes.wrongWo + '. ' + speak);
     	    const speakOutput1 = ' Puedes realizar otro ejercicio o salir.';
     	    const speechImage = 'Tu puntuación es: ' + sessionAttributes.correctWo + '/5. ';
+    	    sessionAttributes.wordsActive = false;
     	    
     	    if(supportsAPL(handlerInput)){
 	        return handlerInput.responseBuilder
@@ -566,6 +567,7 @@ const AnswerLettersIntentHandler = {
     	    const speakOutput = (result.audio + result.message + 'Hemos terminado con esta actividad. Has acertado ' + sessionAttributes.correctLe + ' y has fallado ' + sessionAttributes.wrongLe + '. ' + speak);
     	    const speakOutput1 = ' Puedes realizar otro ejercicio o salir.';
     	    const speechImage = 'Tu puntuación es: ' + sessionAttributes.correctLe + '/5. ';
+    	    sessionAttributes.lettersActive = false;
     	    
     	    if(supportsAPL(handlerInput)){
 	        return handlerInput.responseBuilder
@@ -759,6 +761,7 @@ const AnswerObjectsIntentHandler = {
     	    const speakOutput = (result.audio + result.message + 'Hemos terminado con esta actividad. Has acertado ' + sessionAttributes.correctOb + ' y has fallado ' + sessionAttributes.wrongOb + '. ');
     	    const speakOutput1 = 'Puedes realizar otro ejercicio o salir.';
     	    const speechImage = 'Tu puntuación es: ' + sessionAttributes.correctOb + '/5. ';
+    	    sessionAttributes.objectsActive = false;
     	    
     	    if(supportsAPL(handlerInput)){
 	        return handlerInput.responseBuilder
@@ -952,6 +955,7 @@ const AnswerColorsIntentHandler = {
     	    const speakOutput = (result.audio + result.message + 'Hemos terminado con esta actividad. Has acertado ' + sessionAttributes.correctCo + ' y has fallado ' + sessionAttributes.wrongCo + '. ');
     	    const speakOutput1 = 'Puedes realizar otro ejercicio o salir.';
     	    const speechImage = 'Tu puntuación es: ' + sessionAttributes.correctCo + '/5. ';
+    	    sessionAttributes.colorsActive = false;
     	    
     	    if(supportsAPL(handlerInput)){
 	        return handlerInput.responseBuilder
@@ -1091,8 +1095,9 @@ const CancelAndStopIntentHandler = {
     handle(handlerInput) {
         const {attributesManager} = handlerInput;
         const requestAttributes = attributesManager.getRequestAttributes();
+        const sessionAttributes = attributesManager.getSessionAttributes();
         const speakOutput = requestAttributes.t('GOODBYE_MSG');
-
+        
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .withShouldEndSession(true)
@@ -1184,14 +1189,6 @@ const ErrorHandler = {
 
 /*-------------------------------------------------------------------------------------*/
 /*FUNCTIONS*/
-
-//Explicación: Permite obtener un valor aleatorio de un array.
-//Parámetros: Un array.
-//Devoluciones: Devuelve un elemento del array.
-function randomSound(array){
-    var item = array[Math.floor(Math.random()*array.length)];
-    return item;
-}
 
 //Explicación: Permite barajar un array, es decir, intercambiar las posiciones de sus elementos.
 //Parámetros: Un array.
@@ -1635,7 +1632,7 @@ function getNextColors(handlerInput){
             {"question": "¿De qué color es la leche?", "answer": "blanco", "image": "https://tfg-alexa-images.s3.eu-west-3.amazonaws.com/Colores/leche_byn.jpg"},
             {"question": "¿De qué color es el cielo?", "answer": "azul", "image": "https://tfg-alexa-images.s3.eu-west-3.amazonaws.com/Colores/cielo_byn.jpg"},
             {"question": "¿De qué color es la hierba?", "answer": "verde", "image": "https://tfg-alexa-images.s3.eu-west-3.amazonaws.com/Colores/hierba_byn.jpg"},
-            {"question": "¿De qué color es el contenedor de envases?", "answer": "amarillo", "image": "https://tfg-alexa-images.s3.eu-west-3.amazonaws.com/Colores/envases_byn.jpg"},
+            {"question": "¿De qué color es el contenedor de plásticos?", "answer": "amarillo", "image": "https://tfg-alexa-images.s3.eu-west-3.amazonaws.com/Colores/envases_byn.jpg"},
             {"question": "¿De qué color es el contenedor de papel y cartón?", "answer": "azul", "image": "https://tfg-alexa-images.s3.eu-west-3.amazonaws.com/Colores/carton_byn.jpg"},
             {"question": "¿De qué color es el tomate?", "answer": "rojo", "image": "https://tfg-alexa-images.s3.eu-west-3.amazonaws.com/Colores/tomate_byn.jpg"}
         ],
@@ -1699,36 +1696,24 @@ function getNextColors(handlerInput){
 function checkAnswerMo(handlerInput, answerSlot, checkanswer){
 	const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     console.log("answer: ", sessionAttributes.lastMoney.answer);
-    var status ="";
-	var message ="";
-	var audio ="";
     
-    if (checkanswer == true){
-    	if (sessionAttributes.lastMoney.answer.includes(answerSlot)){
-    		console.log("correcto");
-    		randomNum = numArray[sessionAttributes.counterMo];
-    		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Correcto/correctocopia-" + randomNum + ".mp3\"/>";
-    		message = "";
-    		sessionAttributes.correctMo++;
-    		status = true;
-    	}
-    	else {
-    		console.log("incorrecto");
-    		randomNum = numArray[sessionAttributes.counterMo];
-    		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Incorrecto/incorrectocopia-" + randomNum + ".mp3\"/>";
-    	    message = "La respuesta correcta era: " + sessionAttributes.lastMoney.answer + ". ";
-    	    sessionAttributes.wrongMo++;
-    		status = false;
-    	}
+    if (sessionAttributes.lastMoney.answer.includes(answerSlot)){
+		console.log("correcto");
+		randomNum = numArray[sessionAttributes.counterMo];
+		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Correcto/correctocopia-" + randomNum + ".mp3\"/>";
+		message = "";
+		sessionAttributes.correctMo++;
+		status = true;
     }
     else {
-		console.log("incorrecto por NO SABER");
-		randomNum = randomSound(dontknowArray);
-		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/NoSaber/nosaberocopia-" + randomNum + ".mp3\"/>";
-    	message = "La respuesta correcta era: " + sessionAttributes.lastMoney.answer + ". ";
-    	sessionAttributes.wrongMo++;
+		console.log("incorrecto");
+		randomNum = numArray[sessionAttributes.counterMo];
+		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Incorrecto/incorrectocopia-" + randomNum + ".mp3\"/>";
+	    message = "La respuesta correcta era: " + sessionAttributes.lastMoney.answer + ". ";
+	    sessionAttributes.wrongMo++;
 		status = false;
-	}
+    }
+    
 	sessionAttributes.counterMo += 1;
 	handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 	return {"status":status,"message":message,"audio":audio};
@@ -1740,36 +1725,24 @@ function checkAnswerMo(handlerInput, answerSlot, checkanswer){
 function checkAnswerWo(handlerInput, answerSlot, checkanswer){
 	const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     console.log("answer: ", sessionAttributes.lastWord.answer);
-    var status ="";
-	var message ="";
-	var audio ="";
     
-    if (checkanswer == true){
-    	if (sessionAttributes.lastWord.answer.includes(answerSlot)){
-    		console.log("correcto");
-    		randomNum = numArray[sessionAttributes.counterWo];
-    		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Correcto/correctocopia-" + randomNum + ".mp3\"/>";
-    		message = "";
-    		sessionAttributes.correctWo++;
-    		status = true;
-    	}
-    	else {
-    		console.log("incorrecto");
-    		randomNum = numArray[sessionAttributes.counterWo];
-    		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Incorrecto/incorrectocopia-" + randomNum + ".mp3\"/>";
-    	    message = "La respuesta correcta era: " + sessionAttributes.lastWord.answer + ". ";
-    	    sessionAttributes.wrongWo++;
-    		status = false;
-    	}
-    }
-    else {
-		console.log("incorrecto por NO SABER");
-		randomNum = randomSound(dontknowArray);
-		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/NoSaber/nosaberocopia-" + randomNum + ".mp3\"/>";
-    	message = "La respuesta correcta era: " + sessionAttributes.lastWord.answer + ". ";
-    	sessionAttributes.wrongWo++;
+    if (sessionAttributes.lastWord.answer.includes(answerSlot)){
+    	console.log("correcto");
+    	randomNum = numArray[sessionAttributes.counterWo];
+    	audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Correcto/correctocopia-" + randomNum + ".mp3\"/>";
+    	message = "";
+    	sessionAttributes.correctWo++;
+    	status = true;
+	}
+	else {
+		console.log("incorrecto");
+		randomNum = numArray[sessionAttributes.counterWo];
+		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Incorrecto/incorrectocopia-" + randomNum + ".mp3\"/>";
+	    message = "La respuesta correcta era: " + sessionAttributes.lastWord.answer + ". ";
+	    sessionAttributes.wrongWo++;
 		status = false;
 	}
+
 	sessionAttributes.counterWo += 1;
 	handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 	return {"status":status,"message":message,"audio":audio};
@@ -1781,36 +1754,24 @@ function checkAnswerWo(handlerInput, answerSlot, checkanswer){
 function checkAnswerLe(handlerInput, answerSlot, checkanswer){
 	const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     console.log("answer: ", sessionAttributes.lastLetters.answer);
-	var status ="";
-	var message ="";
-	var audio ="";
     
-    if (checkanswer == true){
-    	if (sessionAttributes.lastLetters.answer.includes(answerSlot)){
-    		console.log("correcto");
-    		randomNum = numArray[sessionAttributes.counterLe];
-    		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Correcto/correctocopia-" + randomNum + ".mp3\"/>";
-    		message = "";
-    		sessionAttributes.correctLe++;
-    		status = true;
-    	}
-    	else {
-    		console.log("incorrecto");
-    		randomNum = numArray[sessionAttributes.counterLe];
-    		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Incorrecto/incorrectocopia-" + randomNum + ".mp3\"/>";
-    	    message = "La respuesta correcta era: " + sessionAttributes.lastLetters.answer + ". ";
-    	    sessionAttributes.wrongLe++;
-    		status = false;
-    	}
-    }
-    else {
-		console.log("incorrecto por NO SABER");
-		randomNum = randomSound(dontknowArray);
-		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/NoSaber/nosaberocopia-" + randomNum + ".mp3\"/>";
-    	message = "La respuesta correcta era: " + sessionAttributes.lastLetters.answer + ". ";
-    	sessionAttributes.wrongLe++;
+    if (sessionAttributes.lastLetters.answer.includes(answerSlot)){
+    	console.log("correcto");
+    	randomNum = numArray[sessionAttributes.counterLe];
+    	audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Correcto/correctocopia-" + randomNum + ".mp3\"/>";
+    	message = "";
+    	sessionAttributes.correctLe++;
+    	status = true;
+	}
+	else {
+		console.log("incorrecto");
+		randomNum = numArray[sessionAttributes.counterLe];
+		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Incorrecto/incorrectocopia-" + randomNum + ".mp3\"/>";
+	    message = "La respuesta correcta era: " + sessionAttributes.lastLetters.answer + ". ";
+	    sessionAttributes.wrongLe++;
 		status = false;
 	}
+
 	sessionAttributes.counterLe += 1;
 	handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 	return {"status":status,"message":message,"audio":audio};
@@ -1822,36 +1783,24 @@ function checkAnswerLe(handlerInput, answerSlot, checkanswer){
 function checkAnswerOb(handlerInput, answerSlot, checkanswer){
 	const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     console.log("answer: ", sessionAttributes.lastObject.answer);
-	var status ="";
-	var message ="";
-	var audio ="";
     
-    if (checkanswer == true){
-    	if (sessionAttributes.lastObject.answer.includes(answerSlot)){
-    		console.log("correcto");
-    		randomNum = numArray[sessionAttributes.counterOb];
-    		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Correcto/correctocopia-" + randomNum + ".mp3\"/>";
-    		message = "";
-    		sessionAttributes.correctOb++;
-    		status = true;
-    	}
-    	else {
-    		console.log("incorrecto");
-    		randomNum = numArray[sessionAttributes.counterOb];
-    		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Incorrecto/incorrectocopia-" + randomNum + ".mp3\"/>";
-    	    message = "La respuesta correcta era: " + sessionAttributes.lastObject.answer + ". ";
-    	    sessionAttributes.wrongOb++;
-    		status = false;
-    	}
-    }
-    else {
-		console.log("incorrecto por NO SABER");
-		randomNum = randomSound(dontknowArray);
-		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/NoSaber/nosaberocopia-" + randomNum + ".mp3\"/>";
-    	message = "La respuesta correcta era: " + sessionAttributes.lastObject.answer + ". ";
-    	sessionAttributes.wrongOb++;
+    if (sessionAttributes.lastObject.answer.includes(answerSlot)){
+    	console.log("correcto");
+		randomNum = numArray[sessionAttributes.counterOb];
+		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Correcto/correctocopia-" + randomNum + ".mp3\"/>";
+		message = "";
+		sessionAttributes.correctOb++;
+		status = true;
+	}
+	else {
+		console.log("incorrecto");
+		randomNum = numArray[sessionAttributes.counterOb];
+		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Incorrecto/incorrectocopia-" + randomNum + ".mp3\"/>";
+	    message = "La respuesta correcta era: " + sessionAttributes.lastObject.answer + ". ";
+	    sessionAttributes.wrongOb++;
 		status = false;
 	}
+
 	sessionAttributes.counterOb += 1;
 	handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 	return {"status":status,"message":message,"audio":audio};
@@ -1863,36 +1812,24 @@ function checkAnswerOb(handlerInput, answerSlot, checkanswer){
 function checkAnswerCo(handlerInput, answerSlot, checkanswer){
 	const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     console.log("answer: ", sessionAttributes.lastColor.answer);
-	var status ="";
-	var message ="";
-	var audio ="";
     
-    if (checkanswer == true){
-    	if (sessionAttributes.lastColor.answer.includes(answerSlot)){
-    		console.log("correcto");
-    		randomNum = numArray[sessionAttributes.counterCo];
-    		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Correcto/correctocopia-" + randomNum + ".mp3\"/>";
-    		message = "";
-    		sessionAttributes.correctCo++;
-    		status = true;
-    	}
-    	else {
-    		console.log("incorrecto");
-    		randomNum = numArray[sessionAttributes.counterCo];
-    		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Incorrecto/incorrectocopia-" + randomNum + ".mp3\"/>";
-    	    message = "La respuesta correcta era: " + sessionAttributes.lastColor.answer + ". ";
-    	    sessionAttributes.wrongCo++;
-    		status = false;
-    	}
-    }
-    else {
-		console.log("incorrecto por NO SABER");
-		randomNum = randomSound(dontknowArray);
-		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/NoSaber/nosaberocopia-" + randomNum + ".mp3\"/>";
-    	message = "La respuesta correcta era: " + sessionAttributes.lastColor.answer + ". ";
-    	sessionAttributes.wrongCo++;
+    if (sessionAttributes.lastColor.answer.includes(answerSlot)){
+		console.log("correcto");
+		randomNum = numArray[sessionAttributes.counterCo];
+		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Correcto/correctocopia-" + randomNum + ".mp3\"/>";
+		message = "";
+		sessionAttributes.correctCo++;
+		status = true;
+	}
+	else {
+		console.log("incorrecto");
+		randomNum = numArray[sessionAttributes.counterCo];
+		audio = "<audio src=\"https://tfg-alexa-audios.s3.eu-west-3.amazonaws.com/Incorrecto/incorrectocopia-" + randomNum + ".mp3\"/>";
+	    message = "La respuesta correcta era: " + sessionAttributes.lastColor.answer + ". ";
+	    sessionAttributes.wrongCo++;
 		status = false;
 	}
+    
 	sessionAttributes.counterCo += 1;
 	handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 	return {"status":status,"message":message,"audio":audio};

@@ -11,7 +11,7 @@
           ],
           "keywords": [],
           "name": "Ejercicios Mentales",
-          "description": "Aplicación que contiene ejercicios mentales con los que podrás ejercitar las capacidades de cálculo, memoria, atención y concentración.",
+          "description": "Aplicación orientada a personas con demencia leve que contiene ejercicios mentales con los que se pueden ejercitar las capacidades de cálculo, memoria, atención y concentración.",
           "smallIconUri": "file://assets/images/es-ES_smallIconUri.png",
           "largeIconUri": "file://assets/images/es-ES_largeIconUri.png"
         }
@@ -22,6 +22,7 @@
       "isAvailableWorldwide": true,
       "testingInstructions": "Sample Testing Instructions.",
       "category": "KNOWLEDGE_AND_TRIVIA",
+      "distributionMode": "PUBLIC",
       "distributionCountries": []
     },
     "apis": {
