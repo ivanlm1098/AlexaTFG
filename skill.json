@@ -3,15 +3,14 @@
     "publishingInformation": {
       "locales": {
         "es-ES": {
-          "summary": "Aplicación con ejercicios mentales.",
+          "summary": "Skill con ejercicios mentales.",
           "examplePhrases": [
             "Alexa abre ejercicios mentales",
-            "Abre ejercicios mentales",
             "ayuda"
           ],
           "keywords": [],
           "name": "Ejercicios Mentales",
-          "description": "Aplicación orientada a personas con demencia leve que contiene ejercicios mentales con los que se pueden ejercitar las capacidades de cálculo, memoria, atención y concentración.",
+          "description": "Skill orientada a personas con demencia leve que contiene ejercicios mentales con los que se pueden ejercitar las capacidades de cálculo, memoria, atención y concentración. Las imágenes en los dispositivos sin pantalla se mostrarán en las tarjetas que se envían a la sección de inicio de la aplicación Alexa.",
           "smallIconUri": "file://assets/images/es-ES_smallIconUri.png",
           "largeIconUri": "file://assets/images/es-ES_largeIconUri.png"
         }

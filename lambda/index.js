@@ -128,7 +128,7 @@ const WelcomeMoneyIntentHandler = {
         }
 
         return handlerInput.responseBuilder
-            .speak(speakOutput + speakOutput2)
+            .speak('Bienvenido al ejercicio del dinero. En este ejercicio estás en el nivel ' + sessionAttributes.moneyCounterLevel + '. Pregunta número 1. ' + speakOutput2)
             .reprompt(requestAttributes.t('FALLBACK_MONEY_MSG') + speakOutput2) //para dejar la sesión abierta y que el usuario me conteste.
             .withStandardCard(speechImage1, speechImage2, money.image, money.image)
             .getResponse();
@@ -168,7 +168,7 @@ const AnswerMoneyIntentHandler = {
         if(sessionAttributes.counterMo > 4){ //si respondo 5 finaliza 
             const speak = checkLevelMoney(sessionAttributes);
     	    const speakOutput = (result.audio + result.message + 'Hemos terminado con esta actividad. Has acertado ' + sessionAttributes.correctMo + ' y has fallado ' + sessionAttributes.wrongMo + '. ' + speak);
-    	    const speakOutput1 = 'Puedes realizar otro ejercicio o salir.';
+    	    const speakOutput1 = requestAttributes.t('END_SPEAK_MSG');
     	    const speechImage = 'Tu puntuación es: ' + sessionAttributes.correctMo + '/5. ';
     	    sessionAttributes.moneyActive = false;
     	    
@@ -191,7 +191,7 @@ const AnswerMoneyIntentHandler = {
 	        }
     	    
     	    return handlerInput.responseBuilder
-    			.speak(speakOutput)
+    			.speak(speakOutput + speakOutput1)
     			.reprompt(speakOutput1)
     			.withSimpleCard("¡FINAL!", "Tu puntuación es: " + sessionAttributes.correctMo + '/5')
     			.getResponse();
@@ -316,7 +316,7 @@ const WelcomeWordsIntentHandler = {
         }
 
         return handlerInput.responseBuilder
-            .speak(speakOutput + speakOutput2)
+            .speak('Bienvenido al ejercicio de las palabras. En este ejercicio estás en el nivel ' + sessionAttributes.wordsCounterLevel + '. Pregunta número 1. ' + speakOutput2)
             .reprompt(requestAttributes.t('FALLBACK_WORDS_MSG') + speakOutput2) //para dejar la sesión abierta y que el usuario me conteste.
             .withSimpleCard(speechImage1, speechImage2)
             .getResponse();
@@ -356,7 +356,7 @@ const AnswerWordsIntentHandler = {
         if(sessionAttributes.counterWo > 4){ //si respondo 5 finaliza 
             const speak = checkLevelWords(sessionAttributes);
     	    const speakOutput = (result.audio + result.message + 'Hemos terminado con esta actividad. Has acertado ' + sessionAttributes.correctWo + ' y has fallado ' + sessionAttributes.wrongWo + '. ' + speak);
-    	    const speakOutput1 = ' Puedes realizar otro ejercicio o salir.';
+    	    const speakOutput1 = requestAttributes.t('END_SPEAK_MSG');
     	    const speechImage = 'Tu puntuación es: ' + sessionAttributes.correctWo + '/5. ';
     	    sessionAttributes.wordsActive = false;
     	    
@@ -379,7 +379,7 @@ const AnswerWordsIntentHandler = {
 	        }
     	    
     	    return handlerInput.responseBuilder
-    			.speak(speakOutput)
+    			.speak(speakOutput + speakOutput1)
     			.reprompt(speakOutput1)
     			.withSimpleCard("¡FINAL!", "Tu puntuación es: " + sessionAttributes.correctWo + '/5')
     			.getResponse();
@@ -525,7 +525,7 @@ const WelcomeLettersIntentHandler = {
         }
 
         return handlerInput.responseBuilder
-            .speak(speakOutput + speakOutput2)
+            .speak('Bienvenido al ejercicio de las letras. En este ejercicio estás en el nivel ' + sessionAttributes.lettersCounterLevel + '. Pregunta número 1. ' + speakOutput2)
             .reprompt(requestAttributes.t('FALLBACK_LETTERS_MSG') + speakOutput2) //para dejar la sesión abierta y que el usuario me conteste.
             .withStandardCard(speechImage1, speechImage2, speechImage3, speechImage3)
             .getResponse();
@@ -565,7 +565,7 @@ const AnswerLettersIntentHandler = {
         if(sessionAttributes.counterLe > 4){ //si respondo 5 finaliza 
             const speak = checkLevelLetters(sessionAttributes);
     	    const speakOutput = (result.audio + result.message + 'Hemos terminado con esta actividad. Has acertado ' + sessionAttributes.correctLe + ' y has fallado ' + sessionAttributes.wrongLe + '. ' + speak);
-    	    const speakOutput1 = ' Puedes realizar otro ejercicio o salir.';
+    	    const speakOutput1 = requestAttributes.t('END_SPEAK_MSG');
     	    const speechImage = 'Tu puntuación es: ' + sessionAttributes.correctLe + '/5. ';
     	    sessionAttributes.lettersActive = false;
     	    
@@ -588,7 +588,7 @@ const AnswerLettersIntentHandler = {
 	        }
     	    
     	    return handlerInput.responseBuilder
-    			.speak(speakOutput)
+    			.speak(speakOutput + speakOutput1)
     			.reprompt(speakOutput1)
     			.withSimpleCard("¡FINAL!", "Tu puntuación es: " + sessionAttributes.correctLe + '/5')
     			.getResponse();
@@ -719,7 +719,7 @@ const WelcomeObjectsIntentHandler = {
         }
 
         return handlerInput.responseBuilder
-            .speak(speakOutput + speakOutput2)
+            .speak('Bienvenido al ejercicio de los objetos. Pregunta número 1. ' + speakOutput2)
             .reprompt(requestAttributes.t('FALLBACK_OBJECTS_MSG') + speakOutput2) //para dejar la sesión abierta y que el usuario me conteste.
             .withStandardCard(speechImage1, speakOutput2, objects.image, objects.image)
             .getResponse();
@@ -759,7 +759,7 @@ const AnswerObjectsIntentHandler = {
         if(sessionAttributes.counterOb > 4){ //si respondo 5 finaliza 
             //const speak = checkLevelObjects(sessionAttributes);
     	    const speakOutput = (result.audio + result.message + 'Hemos terminado con esta actividad. Has acertado ' + sessionAttributes.correctOb + ' y has fallado ' + sessionAttributes.wrongOb + '. ');
-    	    const speakOutput1 = 'Puedes realizar otro ejercicio o salir.';
+    	    const speakOutput1 = requestAttributes.t('END_SPEAK_MSG');
     	    const speechImage = 'Tu puntuación es: ' + sessionAttributes.correctOb + '/5. ';
     	    sessionAttributes.objectsActive = false;
     	    
@@ -782,7 +782,7 @@ const AnswerObjectsIntentHandler = {
 	        }
     	    
     	    return handlerInput.responseBuilder
-    			.speak(speakOutput)
+    			.speak(speakOutput + speakOutput1)
     			.reprompt(speakOutput1)
     			.withSimpleCard("¡FINAL!", "Tu puntuación es: " + sessionAttributes.correctCount + '/5')
     			.getResponse();
@@ -912,7 +912,7 @@ const WelcomeColorsIntentHandler = {
         }
 
         return handlerInput.responseBuilder
-            .speak(speakOutput + speakOutput2)
+            .speak('Bienvenido al ejercicio de los colores. Pregunta número 1. ' + speakOutput2)
             .reprompt(requestAttributes.t('FALLBACK_COLORS_MSG') + speakOutput2) //para dejar la sesión abierta y que el usuario me conteste.
             .withStandardCard(speechImage1, speakOutput2, colors.image, colors.image)
             .getResponse();
@@ -953,7 +953,7 @@ const AnswerColorsIntentHandler = {
         if(sessionAttributes.counterCo > 4){ //si respondo 5 finaliza 
             //const speak = checkLevelColors(sessionAttributes);
     	    const speakOutput = (result.audio + result.message + 'Hemos terminado con esta actividad. Has acertado ' + sessionAttributes.correctCo + ' y has fallado ' + sessionAttributes.wrongCo + '. ');
-    	    const speakOutput1 = 'Puedes realizar otro ejercicio o salir.';
+    	    const speakOutput1 = requestAttributes.t('END_SPEAK_MSG');
     	    const speechImage = 'Tu puntuación es: ' + sessionAttributes.correctCo + '/5. ';
     	    sessionAttributes.colorsActive = false;
     	    
@@ -976,7 +976,7 @@ const AnswerColorsIntentHandler = {
 	        }
     	    
     	    return handlerInput.responseBuilder
-    			.speak(speakOutput)
+    			.speak(speakOutput + speakOutput1)
     			.reprompt(speakOutput1)
     			.withSimpleCard("¡FINAL!", "Tu puntuación es: " + sessionAttributes.correctCo + '/5')
     			.getResponse();

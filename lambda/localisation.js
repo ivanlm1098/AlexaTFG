@@ -2,7 +2,7 @@ module.exports = {
   es:{
     translation: {
       WELCOME_MSG: 'Hola, esta es una actividad de ejercicios mentales. Hay cinco ejercicios disponibles: dinero, palabras, letras, objetos y colores. Dime cuál quieres realizar.',
-      HELP_MSG: 'Esta es una actividad de ejercicios mentales. Los ejercicios disponibles son: dinero, palabras, letras, objetos o colores.',
+      HELP_MSG: 'Esta es una actividad de ejercicios mentales. Los ejercicios disponibles son: dinero, palabras, letras, objetos o colores. Dime cuál quieres realizar.',
       HELP_MONEY_MSG: 'Este es el ejercicio del dinero. Para responder debes decir un numero.',
       HELP_WORDS_MSG: 'Este es el ejercicio de las palabras incompletas. Para responder debes decir: la palabra es...',
       HELP_LETTERS_MSG: 'Este es el ejercicio de las letras de colores. Para responder debes decir: hay...',
@@ -16,7 +16,8 @@ module.exports = {
       FALLBACK_OBJECTS_MSG: 'Recuerda que para responder debes decir: la respuesta... ',
       FALLBACK_COLORS_MSG: 'Recuerda que para responder debes decir: es de color... ',
       ERROR_MSG: 'Lo siento, ha habido un problema.',
-      END_MSG: '<br>Para realizar otro ejercicio di: dinero, palabras, letras, objetos o colores. Para salir di: para.'
+      END_MSG: '<br>Para realizar otro ejercicio di: dinero, palabras, letras, objetos o colores. Para salir di: para.',
+      END_SPEAK_MSG: 'Dime un ejercicio o di para, si quieres salir.'
     }
   }
 }
